@@ -51,7 +51,8 @@ resource "aws_eip" "ngw" {
 
 resource "aws_nat_gateway" "ngw" {
   allocation_id = aws_eip.ngw.id
-  subnet_id     = lookup(lookup(module.subnets, "public", null), "subnet_ids", null)
+#  subnet_id     = lookup(lookup(module.subnets, "public", null), "subnet_ids", null)[0]
+  subnet_id = module.subnets["public"].subnet_ids
 
   tags = merge({
     Name = "${var.env}-ngw"
